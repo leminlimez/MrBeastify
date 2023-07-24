@@ -1,5 +1,5 @@
 # MrBeastify
-Add mrbeast to every youtube thumbnail
+Add mrbeast to every youtube thumbnail in the native iOS app
 
 # Credits
 Original Extension: https://github.com/MagicJinn/MrBeastify-Youtube/tree/main
