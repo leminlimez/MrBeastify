@@ -8,9 +8,16 @@
 -(void)didMoveToWindow {
     %orig;
     
+    // Get a random image
+    int lowerBound = 1;
+    int upperBound = 59;
+    int img = lowerBound + arc4random() % (upperBound - lowerBound);
+    
+    // Make string
+    NSString *str = [NSString stringWithFormat:@"/Library/Application Support/MrBeastify/%d.png", img];
+    
     // Create image
-    // you should obv load this from a file or smth. just using plus here as a sample image
-    UIImage *image = [[UIImage alloc] initWithContentsOfFile:ROOT_PATH_NS(@"/Library/Application Support/MrBeastify/1.png")];
+    UIImage *image = [[UIImage alloc] initWithContentsOfFile:ROOT_PATH_NS_VAR(str)];
 
     // Create image view
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
