@@ -2,29 +2,38 @@
 #import <rootless.h>
 
 @interface YTElementsInlineMutedPlaybackView : UIView
+@property (nonatomic, assign) bool beastified;
 @end
 
 %hook YTElementsInlineMutedPlaybackView
--(void)didMoveToWindow {
-    %orig;
+%property (nonatomic, assign) bool beastified;
+-(instancetype)initWithFrame:(CGRect)frame {
+    self = %orig;
     
-    // Get a random image
-    int lowerBound = 1;
-    int upperBound = 59;
-    int img = lowerBound + arc4random() % (upperBound - lowerBound);
+    if (!self) return nil;
     
-    // Make string
-    NSString *str = [NSString stringWithFormat:@"/Library/Application Support/MrBeastify/%d.png", img];
-    
-    // Create image
-    UIImage *image = [[UIImage alloc] initWithContentsOfFile:ROOT_PATH_NS_VAR(str)];
+    if (!self.beastified) {
+        // Get a random image
+        int lowerBound = 1;
+        int upperBound = 59;
+        int img = lowerBound + arc4random() % (upperBound - lowerBound);
+        
+        // Make string
+        NSString *str = [NSString stringWithFormat:@"/Library/Application Support/MrBeastify/%d.png", img];
+        
+        // Create image
+        UIImage *image = [[UIImage alloc] initWithContentsOfFile:ROOT_PATH_NS_VAR(str)];
 
-    // Create image view
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-    imageView.frame = self.frame; // x y width height
-    imageView.center = self.center; // centre of thumbnail
+        // Create image view
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        imageView.frame = self.frame; // x y width height
+        imageView.center = self.center; // centre of thumbnail
 
-    // Overlay image view to self (thumbnail)
-    [self addSubview:imageView];
+        // Overlay image view to self (thumbnail)
+        self.beastified = true;
+        [self addSubview:imageView];
+    }
+    
+    return self;
 }
 %end
