@@ -2,11 +2,11 @@
 #import <rootless.h>
 
 @interface YTElementsInlineMutedPlaybackView : UIView
-@property (nonatomic, assign) bool beastified;
+@property (nonatomic, assign) BOOL beastified;
 @end
 
 %hook YTElementsInlineMutedPlaybackView
-%property (nonatomic, assign) bool beastified;
+%property (nonatomic, assign) BOOL beastified;
 -(instancetype)initWithFrame:(CGRect)frame {
     self = %orig;
     
@@ -30,8 +30,8 @@
         imageView.center = self.center; // centre of thumbnail
 
         // Overlay image view to self (thumbnail)
-        self.beastified = true;
         [self addSubview:imageView];
+        self.beastified = true;
     }
     
     return self;
