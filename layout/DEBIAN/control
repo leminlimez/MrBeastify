@@ -1,0 +1,9 @@
+Package: com.leemin.mrbeastify
+Name: MrBeastify
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: MrBeastify your YouTube experience
+Maintainer: lemin
+Author: lemin
+Section: Tweaks
+Depends: mobilesubstrate
