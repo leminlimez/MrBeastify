@@ -12,11 +12,11 @@ NSArray *flippableText = @[@23, @37, @46];
 -(void)layoutSubviews {
 	%orig;
 
-	if (self.frame.size.height != 20) return;
+	if (self.frame.size.height != 20 && self.frame.size.height != 21) return;
 
 	for (UIView *subview in self.superview.superview.subviews) {
 		// Ensure it's suitable to add our image
-		if (subview.frame.size.height < 150 || subview.frame.size.height > 250) continue;
+		if (subview.frame.size.height < 90 || subview.frame.size.height > 250) continue;
 		if (subview.subviews.count != 1) continue;
   
         // Decide whether to flip or not
