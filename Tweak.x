@@ -3,7 +3,7 @@
 #import "Header.h"
 
 BOOL TweakEnabled() {
-    if ([[NSUserDefaults standardUserDefaults] valueForKey:EnabledKey]) {
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:EnabledKey] != nil) {
 	return [[NSUserDefaults standardUserDefaults] boolForKey:EnabledKey];
     }
     return YES;
