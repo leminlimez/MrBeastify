@@ -3,7 +3,10 @@
 #import "Header.h"
 
 BOOL TweakEnabled() {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:EnabledKey];
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:EnabledKey]) {
+	return [[NSUserDefaults standardUserDefaults] boolForKey:EnabledKey];
+    }
+    return YES;
 }
 
 @interface _ASDisplayView : UIView
