@@ -1,5 +1,10 @@
 #import <UIKit/UIKit.h>
 #import <rootless.h>
+#import "Header.h"
+
+BOOL TweakEnabled() {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:EnabledKey];
+}
 
 @interface _ASDisplayView : UIView
 @end
@@ -11,6 +16,8 @@ NSArray *flippableText = @[@23, @37, @46];
 %hook _ASDisplayView
 -(void)layoutSubviews {
 	%orig;
+ 
+    if (!TweakEnabled()) return;
 
 	if (![self.accessibilityIdentifier isEqualToString:@"eml.timestamp"]) return;
 
@@ -52,4 +59,17 @@ NSArray *flippableText = @[@23, @37, @46];
 %ctor {
 	// set imageCount
 	imageCount = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:ROOT_PATH_NS(@"/Library/Application Support/MrBeastify/") error:nil] count];
+}
+
+NSBundle *MrBeastifyBundle() {
+    static NSBundle *bundle = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *tweakBundlePath = [[NSBundle mainBundle] pathForResource:@"MrBeastify" ofType:@"bundle"];
+        if (tweakBundlePath)
+            bundle = [NSBundle bundleWithPath:tweakBundlePath];
+        else
+            bundle = [NSBundle bundleWithPath:ROOT_PATH_NS(@"/Library/Application Support/MrBeastify")];
+    });
+    return bundle;
 }
