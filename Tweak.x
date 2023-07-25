@@ -20,7 +20,7 @@ NSArray *flippableText = @[@23, @37, @46];
 		if (subview.subviews.count != 1) continue;
   
         // Decide whether to flip or not
-        BOOL isFlipped = arc4random_uniform(2) == 1;
+        BOOL isFlipped = arc4random_uniform(4) == 1;
 
 		// Pick a random image
 		int imageNumber = 1 + arc4random() % (imageCount - 1);
