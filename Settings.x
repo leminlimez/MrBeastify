@@ -28,7 +28,6 @@ static const NSInteger MrBeastifySection = 202;
 - (void)updateMrBeastifySectionWithEntry:(id)entry {
     YTSettingsViewController *delegate = [self valueForKey:@"_dataDelegate"];
     NSMutableArray *sectionItems = [NSMutableArray array];
-    NSBundle *tweakBundle = MrBeastifyBundle();
     YTSettingsSectionItem *enabled = [%c(YTSettingsSectionItem) switchItemWithTitle:@"Enabled"
         titleDescription:@"Restart Required"
         accessibilityIdentifier:nil
@@ -39,7 +38,6 @@ static const NSInteger MrBeastifySection = 202;
         }
         settingItemId:0];
     [sectionItems addObject:enabled];
-    }
     [delegate setSectionItems:sectionItems forCategory:MrBeastifySection title:TweakName titleDescription:nil headerHidden:NO];
 }
 
