@@ -6,6 +6,8 @@
 
 int imageCount = 0;
 
+NSArray *flippableText = @[@23, @37, @46];
+
 %hook _ASDisplayView
 -(void)layoutSubviews {
 	%orig;
@@ -16,10 +18,17 @@ int imageCount = 0;
 		// Ensure it's suitable to add our image
 		if (subview.frame.size.height < 150 || subview.frame.size.height > 250) continue;
 		if (subview.subviews.count != 1) continue;
+  
+        // Decide whether to flip or not
+        BOOL isFlipped = arc4random_uniform(2) == 1;
 
 		// Pick a random image
 		int imageNumber = 1 + arc4random() % (imageCount - 1);
 		NSString *filepath = [NSString stringWithFormat:@"/Library/Application Support/MrBeastify/%d.png", imageNumber];
+        
+        if (isFlipped && [flippableText containsObject:[NSNumber numberWithInt:imageNumber]]) {
+                filepath = [NSString stringWithFormat:@"/Library/Application Support/MrBeastify/%d_flipped.png", imageNumber];
+        }
 		
 		// Create image
 		UIImage *image = [[UIImage alloc] initWithContentsOfFile:ROOT_PATH_NS_VAR(filepath)];
@@ -28,6 +37,10 @@ int imageCount = 0;
 		UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
 		imageView.frame = subview.frame; // same size as thumbnail
 		imageView.center = subview.center; // centre of thumbnail
+          if (isFlipped && ![flippableText containsObject:[NSNumber numberWithInt:imageNumber]]) {
+            // Flip the UI Image
+            imageView.transform = CGAffineTransformMakeScale(-1, 1);
+        }
 
 		[subview addSubview:imageView];
 
