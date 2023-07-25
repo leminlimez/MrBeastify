@@ -1,20 +1,22 @@
 #import <UIKit/UIKit.h>
 #import <rootless.h>
 
-@interface YTElementsInlineMutedPlaybackView : UIView
-@property (nonatomic, assign) BOOL beastified;
+@interface _ASDisplayView : UIView
 @end
 
 int imageCount = 0;
 
-%hook YTElementsInlineMutedPlaybackView
-%property (nonatomic, assign) BOOL beastified;
--(instancetype)initWithFrame:(CGRect)frame {
-	self = %orig;
-	
-	if (!self) return nil;
-	
-	if (!self.beastified) {
+%hook _ASDisplayView
+-(void)layoutSubviews {
+	%orig;
+
+	if (self.frame.size.height != 20) return;
+
+	for (UIView *subview in self.superview.superview.subviews) {
+		// Ensure it's suitable to add our image
+		if (subview.frame.size.height < 150 || subview.frame.size.height > 250) continue;
+		if (subview.subviews.count != 1) continue;
+
 		// Pick a random image
 		int imageNumber = 1 + arc4random() % (imageCount - 1);
 		NSString *filepath = [NSString stringWithFormat:@"/Library/Application Support/MrBeastify/%d.png", imageNumber];
@@ -24,15 +26,13 @@ int imageCount = 0;
 
 		// Create image view
 		UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-		imageView.frame = self.frame; // x y width height
-		imageView.center = self.center; // centre of thumbnail
+		imageView.frame = subview.frame; // same size as thumbnail
+		imageView.center = subview.center; // centre of thumbnail
 
-		// Overlay image view to self (thumbnail)
-		[self addSubview:imageView];
-		self.beastified = true;
+		[subview addSubview:imageView];
+
+		break;
 	}
-	
-	return self;
 }
 %end
 
