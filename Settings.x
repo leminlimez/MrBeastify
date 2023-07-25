@@ -29,7 +29,7 @@ static const NSInteger MrBeastifySection = 202;
     YTSettingsViewController *delegate = [self valueForKey:@"_dataDelegate"];
     NSMutableArray *sectionItems = [NSMutableArray array];
     NSBundle *tweakBundle = MrBeastifyBundle();
-    YTSettingsSectionItem *enabled = [%c(YTSettingsSectionItem) @"Enabled"
+    YTSettingsSectionItem *enabled = [%c(YTSettingsSectionItem) switchItemWithTitle:@"Enabled"
         titleDescription:@"Restart Required"
         accessibilityIdentifier:nil
         switchOn:TweakEnabled()
