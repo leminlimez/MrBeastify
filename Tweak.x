@@ -56,7 +56,7 @@ NSString *MrBeastifyBundlePath() {
 		NSString *filepath = [NSString stringWithFormat:@"%@/%d.png", MrBeastifyBundlePath(), imageNumber];
         
         if (isFlipped && [flippableText containsObject:[NSNumber numberWithInt:imageNumber]]) {
-			filepath = [NSString stringWithFormat:@"%@/%d-flipped.png", MrBeastifyBundlePath(), imageNumber];
+			filepath = [NSString stringWithFormat:@"%@/%d_flipped.png", MrBeastifyBundlePath(), imageNumber];
         }
 		
 		// Create image
