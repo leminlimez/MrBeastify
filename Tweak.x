@@ -16,6 +16,23 @@ int imageCount = 0;
 
 NSArray *flippableText = @[@23, @37, @46];
 
+NSBundle *MrBeastifyBundle() {
+    static NSBundle *bundle = nil;
+    static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+        NSString *tweakBundlePath = [[NSBundle mainBundle] pathForResource:@"MrBeastify" ofType:@"bundle"];
+        if (tweakBundlePath)
+            bundle = [NSBundle bundleWithPath:tweakBundlePath];
+        else
+            bundle = [NSBundle bundleWithPath:ROOT_PATH_NS(@"/Library/Application Support/MrBeastify.bundle")];
+    });
+    return bundle;
+}
+
+NSString *MrBeastifyBundlePath() {
+	return [MrBeastifyBundle() bundlePath];
+}
+
 %hook _ASDisplayView
 -(void)layoutSubviews {
 	%orig;
@@ -34,10 +51,12 @@ NSArray *flippableText = @[@23, @37, @46];
 
 		// Pick a random image
 		int imageNumber = 1 + arc4random() % (imageCount - 1);
-		NSString *filepath = [NSString stringWithFormat:@"/Library/Application Support/MrBeastify/%d.png", imageNumber];
+
+		// from the nsbundle
+		NSString *filepath = [NSString stringWithFormat:@"%@/%d.png", MrBeastifyBundlePath(), imageNumber];
         
         if (isFlipped && [flippableText containsObject:[NSNumber numberWithInt:imageNumber]]) {
-                filepath = [NSString stringWithFormat:@"/Library/Application Support/MrBeastify/%d_flipped.png", imageNumber];
+			filepath = [NSString stringWithFormat:@"%@/%d-flipped.png", MrBeastifyBundlePath(), imageNumber];
         }
 		
 		// Create image
@@ -60,6 +79,6 @@ NSArray *flippableText = @[@23, @37, @46];
 %end
 
 %ctor {
-	// set imageCount
-	imageCount = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:ROOT_PATH_NS(@"/Library/Application Support/MrBeastify/") error:nil] count];
+	NSBundle *tweakBundle = MrBeastifyBundle();
+	imageCount = (int)[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[tweakBundle bundlePath] error:nil].count;
 }
