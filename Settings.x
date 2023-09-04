@@ -23,6 +23,12 @@ static const NSInteger MrBeastifySection = 202;
 }
 %end
 
+%hook YTSettingsSectionController
+- (void)setSelectedItem:(NSUInteger)selectedItem {
+    if (selectedItem != NSNotFound) %orig;
+}
+%end
+
 %hook YTSettingsSectionItemManager
 %new(v@:@)
 - (void)updateMrBeastifySectionWithEntry:(id)entry {
