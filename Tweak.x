@@ -1,10 +1,11 @@
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import <rootless.h>
+#import "Header.h"
 #import "../YouTubeHeader/YTSettingsViewController.h"
 #import "../YouTubeHeader/YTSettingsSectionItem.h"
 #import "../YouTubeHeader/YTSettingsSectionItemManager.h"
 #import "../YouTubeHeader/YTAppSettingsSectionItemActionController.h"
-#import "Header.h"
 
 BOOL TweakEnabled() {
     if ([[NSUserDefaults standardUserDefaults] valueForKey:EnabledKey] != nil) {
