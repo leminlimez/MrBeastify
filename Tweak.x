@@ -3,9 +3,6 @@
 #import <rootless.h>
 #import "Header.h"
 #import "../YouTubeHeader/YTSettingsViewController.h"
-#import "../YouTubeHeader/YTSettingsSectionItem.h"
-#import "../YouTubeHeader/YTSettingsSectionItemManager.h"
-#import "../YouTubeHeader/YTAppSettingsSectionItemActionController.h"
 
 BOOL TweakEnabled() {
     if ([[NSUserDefaults standardUserDefaults] valueForKey:EnabledKey] != nil) {
@@ -59,7 +56,7 @@ NSString *MrBeastifyBundlePath() {
 %hook YTSettingsViewController
 - (void)setSectionItems:(NSMutableArray <YTSettingsSectionItem *> *)sectionItems forCategory:(NSInteger)category title:(NSString *)title titleDescription:(NSString *)titleDescription headerHidden:(BOOL)headerHidden {
     if (category == 1) {
-        YTSettingsSectionItem *mrBeastifyOption = [[%c(YTSettingsSectionItem) alloc] initWithTitle:LOC(@"Enable MrBeastify") titleDescription:LOC(@"Adds MrBeast to the YouTube Thumbnails.")];
+        YTSettingsSectionItem *mrBeastifyOption = [[%c(YTSettingsSectionItem) alloc] initWithTitle:@"Enable MrBeastify" titleDescription:@"Adds MrBeast to the YouTube Thumbnails."];
         mrBeastifyOption.hasSwitch = YES;
         mrBeastifyOption.switchVisible = YES;
         mrBeastifyOption.on = TweakEnabled();
