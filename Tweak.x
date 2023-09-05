@@ -2,7 +2,6 @@
 #import <Foundation/Foundation.h>
 #import <rootless.h>
 #import "Header.h"
-#import "../YouTubeHeader/YTSettingsViewController.h"
 
 BOOL TweakEnabled() {
     if ([[NSUserDefaults standardUserDefaults] valueForKey:EnabledKey] != nil) {
