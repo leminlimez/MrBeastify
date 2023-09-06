@@ -54,7 +54,7 @@ NSString *MrBeastifyBundlePath() {
 
 %hook YTSettingsViewController
 - (void)setSectionItems:(NSMutableArray <YTSettingsSectionItem *> *)sectionItems forCategory:(NSInteger)category title:(NSString *)title titleDescription:(NSString *)titleDescription headerHidden:(BOOL)headerHidden {
-    if (category == 1) {
+    if (category == 2) {
         YTSettingsSectionItem *mrBeastifyOption = [[%c(YTSettingsSectionItem) alloc] initWithTitle:@"Enable MrBeastify" titleDescription:@"Adds MrBeast to the YouTube Thumbnails."];
         mrBeastifyOption.hasSwitch = YES;
         mrBeastifyOption.switchVisible = YES;
