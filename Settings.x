@@ -38,7 +38,10 @@ static const NSInteger MrBeastifySection = 202;
         }
         settingItemId:0];
     [sectionItems addObject:enabled];
-    [delegate setSectionItems:sectionItems forCategory:MrBeastifySection title:TweakName titleDescription:nil headerHidden:NO];
+    if ([delegate respondsToSelector:@selector(setSectionItems:forCategory:title:icon:titleDescription:headerHidden:)])
+        [delegate setSectionItems:sectionItems forCategory:MrBeastifySection title:TweakName icon:nil titleDescription:nil headerHidden:NO];
+    else
+        [delegate setSectionItems:sectionItems forCategory:MrBeastifySection title:TweakName titleDescription:nil headerHidden:NO];
 }
 
 - (void)updateSectionForCategory:(NSUInteger)category withEntry:(id)entry {
